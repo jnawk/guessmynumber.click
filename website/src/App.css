@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+  font-size: x-large;
+}
+
+table {
+  margin: 0 auto;
+}
+
+td {
+  width: 70px;
+  height: 70px;
+  font-size: 1.5em;
+}
+
+table span {
+  cursor: default;
+}
+
+td:hover {
+  font-size: 2.15em;
+}
+
