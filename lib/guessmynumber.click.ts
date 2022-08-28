@@ -40,7 +40,7 @@ export class PipelineStack extends Stack {
         selfMutation: true
       })
 
-      pipeline.addStage(new DeploymentStage(this, "Deployment"))
+      pipeline.addStage(new DeploymentStage(this, "GuessMyNumberClickDeployment"))
   }
 }
 
