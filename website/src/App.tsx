@@ -66,6 +66,56 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({showBestGuess: show})
   } 
 
+  guess(guess: number) {
+    const {win} = this.props
+    const {gameState, target} = this.state
+    let {guesses, won} = this.state
+
+    guesses = guesses + 1
+    if (guess === target) {
+      won = true
+      this.setState({
+        guesses,
+        won,
+        gameState: {
+          minimum: guess - 1,
+          maximum: guess + 1
+        }
+      })
+    } else {
+      if (guess < target) {                
+        if(gameState.maximum == target + 1 && guess == target - 1) {
+          guesses = guesses + 1
+          won = true
+        }
+        this.setState({
+          guesses,
+          won,
+          gameState: {
+            minimum: guess,
+            maximum: gameState.maximum
+          }
+        })
+      } else {
+        if(guess == target + 1 && gameState.minimum == target - 1) {
+          guesses = guesses + 1
+          won = true
+        }
+        this.setState({
+          guesses,
+          won,
+          gameState: {
+            minimum: gameState.minimum,
+            maximum: guess
+          }
+        })
+      }
+    }
+    if(won && win) {
+      win(guesses)
+    }
+  }
+
   render() {
     const {gameConfig, gameState, won, showBestGuess} = this.state
     let {showConfetti} = this.props
@@ -79,36 +129,7 @@ class App extends React.Component<AppProps, AppState> {
           <GameBoard 
             gameConfig={gameConfig} 
             gameState={gameState}
-            guess={guess => {
-              guesses = guesses + 1
-              if (guess === target) {
-                //TODO reset
-                this.setState({
-                  guesses,
-                  gameState: {
-                    minimum: guess - 1,
-                    maximum: guess + 1
-                  }
-                })
-                console.log("yay")
-              } else if (guess < target) {
-                this.setState({
-                  guesses,
-                  gameState: {
-                    minimum: guess,
-                    maximum: gameState.maximum
-                  }
-                })
-              } else {
-                this.setState({
-                  guesses,
-                  gameState: {
-                    minimum: gameState.minimum,
-                    maximum: guess
-                  }
-                })
-              }
-            }}
+            guess={guess => this.guess(guess)}
             won={won}
             showConfetti={showConfetti}
           />
