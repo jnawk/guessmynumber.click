@@ -30,7 +30,6 @@ function normalize(scale: number, value: number, minimum: number, maximum: numbe
 export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
     constructor(props: GameBoardProps) {
         super(props)
-
     }
      
     render(): React.ReactNode {
@@ -40,12 +39,10 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
             const rowEnd = Math.min(gameConfig.maximum, rowStart + 10)
             return range(rowStart, rowEnd)
         }).filter(x => x.length !== 0)
-        console.log(rows)
 
         return <>   
             <table><tbody>
                 {rows.map(row => {
-                    console.log("row " + row)
                     return <tr key={"row" + row[0]}>
                         {row.map(value => {
                             let cellContent, click
@@ -75,7 +72,6 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
                                 blue = 0xff
                             }
                             
-
                             if(value <= gameState.minimum || value >= gameState.maximum) {
                                 cellContent = <>&nbsp;</>
                                 click = undefined
