@@ -16,20 +16,28 @@ interface AppState {
   gameConfig: GameRange
   gameState: GameRange
   showBestGuess: boolean
+  won: boolean
+}
+
+interface AppProps {
+  target?: number
+  win?: {(guesses: number): void}
+  showConfetti?: boolean
 }
 
 export function randomInRange(minimum: number, maximum: number): number {
   return parseInt((Math.random() * (maximum - minimum) + minimum).toFixed(0))
 }
 
-class App extends React.Component<Record<string, never>, AppState> {
-  constructor(props: Record<string, never>) {
+class App extends React.Component<AppProps, AppState> {
+  constructor(props: AppProps) {
     super(props)
 
     this.state = {
       target: randomInRange(0, 100),
       showBestGuess: true,
       guesses: 0,
+      won: false,
       gameConfig: {
         minimum: 0,
         maximum: 101
@@ -39,7 +47,6 @@ class App extends React.Component<Record<string, never>, AppState> {
         maximum: 101
       }
     }
-
   }
 
   newGame() {
@@ -47,11 +54,11 @@ class App extends React.Component<Record<string, never>, AppState> {
     this.setState({
       target: randomInRange(gameConfig.minimum, gameConfig.maximum),
       guesses: 0,
+      won: false,
       gameState: {
         minimum: gameConfig.minimum,
         maximum: gameConfig.maximum
       }
-
     })
   }
 
@@ -60,8 +67,12 @@ class App extends React.Component<Record<string, never>, AppState> {
   } 
 
   render() {
-    const {gameConfig, gameState, target, showBestGuess} = this.state
+    const {gameConfig, gameState, won, showBestGuess} = this.state
+    let {showConfetti} = this.props
     let {guesses} = this.state
+    if (showConfetti === undefined) {
+      showConfetti = true 
+    }
     return (
       <div className="App">
         <div>
@@ -98,6 +109,8 @@ class App extends React.Component<Record<string, never>, AppState> {
                 })
               }
             }}
+            won={won}
+            showConfetti={showConfetti}
           />
         </div>
         <div>

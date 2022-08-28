@@ -1,6 +1,7 @@
 import React from "react"
 import {GameRange} from './App'
 import './App.css'
+import Confetti from 'react-confetti'
 
 function range(
   start: number, 
@@ -17,6 +18,8 @@ export interface GameBoardProps {
     gameConfig: GameRange
     gameState: GameRange
     guess: {(guess: number): void}
+    won: boolean,
+    showConfetti?: boolean
 }
 
 interface GameBoardState {
@@ -33,14 +36,20 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
     }
      
     render(): React.ReactNode {
-        const {gameConfig, gameState, guess} = this.props
+        const {gameConfig, gameState, guess, won, showConfetti} = this.props
         const rowStarts = range(gameConfig.minimum, gameConfig.maximum, 10)
         const rows = rowStarts.map(rowStart => { 
             const rowEnd = Math.min(gameConfig.maximum, rowStart + 10)
             return range(rowStart + 1, rowEnd + 1)
         }).filter(x => x.length !== 0)
 
+        let confetti = undefined
+        if(won && showConfetti !== false) {
+            confetti = <Confetti recycle={false}/>
+        }
+
         return <>   
+            {confetti}
             <table><tbody>
                 {rows.map(row => {
                     return <tr key={"row" + row[0]}>
