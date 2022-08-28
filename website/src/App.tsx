@@ -18,8 +18,8 @@ interface AppState {
   showBestGuess: boolean
 }
 
-function randomInRange(minimum: number, maximum: number): number {
-  return parseInt((Math.random() * (maximum - minimum - 2 ) + minimum + 1).toFixed(0))
+export function randomInRange(minimum: number, maximum: number): number {
+  return parseInt((Math.random() * (maximum - minimum) + minimum).toFixed(0))
 }
 
 class App extends React.Component<Record<string, never>, AppState> {
