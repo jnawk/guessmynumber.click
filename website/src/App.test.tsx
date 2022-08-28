@@ -15,12 +15,12 @@ test('Random number generator returns valid values', () => {
   while(triesLeft > 0) {
       triesLeft = triesLeft - 1
       const val = randomInRange(min, max)
-      if(val < min || val > max) {
+      if(val <= min || val > max) {
         throw new Error("Saw value out of range")
       }
-      if (val === 0) {
+      if (val === min + 1) {
         minSeen = true
-      } else if(val === 10) {
+      } else if(val === max) {
         maxSeen = true
       } 
   }
