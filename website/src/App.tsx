@@ -33,13 +33,14 @@ class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props)
 
+    const {target} = this.props
     this.state = {
-      target: randomInRange(0, 100),
+      target: target || randomInRange(0, 100),
       showBestGuess: true,
       guesses: 0,
       won: false,
       gameConfig: {
-        minimum: 0,
+        minimum: 0,   // TODO this is a bit shit.
         maximum: 101
       },
       gameState: {

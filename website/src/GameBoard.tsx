@@ -98,6 +98,7 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
                                 <td 
                                     onClick={click} 
                                     key={"cell" + value}
+                                    id={"cell" + value}
                                     style={style}       
                                 >
                                     {cellContent}

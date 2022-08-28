@@ -1,11 +1,97 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App, { randomInRange } from './App';
+import { act } from 'react-dom/test-utils';
 
-test('renders learn react link', () => {
-  render(<App />);
-  // const linkElement = screen.getByText(/learn react/i);
-  // expect(linkElement).toBeInTheDocument();
+test('game is won when the right element is clicked', () => {
+  let won = false
+  let guessCount
+  render(
+    <App 
+      target={42} 
+      win={(guesses: number) => {
+        won = true
+        guessCount = guesses
+      }}
+      showConfetti={false} 
+    />
+  );
+
+  act(() => {
+    document.getElementById("cell42")?.click()
+  })
+  expect(won).toBe(true)
+  expect(guessCount).toBe(1)
+});
+
+test('game is won when the right number is the last option', () => {
+  let won = false
+  let guessCount
+  render(
+    <App 
+      target={42} 
+      win={(guesses: number) => {
+        won = true
+        guessCount = guesses
+      }}
+      showConfetti={false} 
+    />
+  );
+
+  act(() => {
+    document.getElementById("cell41")?.click()
+  })
+  act(() => {
+    document.getElementById("cell43")?.click()
+  })
+  expect(won).toBe(true)
+  expect(guessCount).toBe(3)
+});
+
+test('game is not won when the right number is not the only option - scenario 1', () => {
+  let won = false
+  let guessCount
+  render(
+    <App 
+      target={42} 
+      win={(guesses: number) => {
+        won = true
+        guessCount = guesses
+      }}
+      showConfetti={false} 
+    />
+  );
+
+  act(() => {
+    document.getElementById("cell41")?.click()
+  })
+  act(() => {
+    document.getElementById("cell44")?.click()
+  })
+  expect(won).toBe(false)
+});
+
+test('game is not won when the right number is not the only option - scenario 2', () => {
+  let won = false
+  let guessCount
+  render(
+    <App 
+      target={42} 
+      win={(guesses: number) => {
+        won = true
+        guessCount = guesses
+      }}
+      showConfetti={false} 
+    />
+  );
+
+  act(() => {
+    document.getElementById("cell43")?.click()
+  })
+  act(() => {
+    document.getElementById("cell40")?.click()
+  })
+  expect(won).toBe(false)
 });
 
 test('Random number generator returns valid values', () => {
