@@ -37,7 +37,7 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
         const rowStarts = range(gameConfig.minimum, gameConfig.maximum, 10)
         const rows = rowStarts.map(rowStart => { 
             const rowEnd = Math.min(gameConfig.maximum, rowStart + 10)
-            return range(rowStart, rowEnd)
+            return range(rowStart + 1, rowEnd + 1)
         }).filter(x => x.length !== 0)
 
         return <>   

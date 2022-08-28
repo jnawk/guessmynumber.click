@@ -32,11 +32,11 @@ class App extends React.Component<Record<string, never>, AppState> {
       guesses: 0,
       gameConfig: {
         minimum: 0,
-        maximum: 100
+        maximum: 101
       },
       gameState: {
         minimum: 0,
-        maximum: 100
+        maximum: 101
       }
     }
 
