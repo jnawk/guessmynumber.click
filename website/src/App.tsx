@@ -94,7 +94,7 @@ class App extends React.Component<AppProps, AppState> {
           guesses,
           won,
           gameState: {
-            minimum: guess,
+            minimum: guess + 1,
             maximum: gameState.maximum
           }
         })
@@ -108,7 +108,7 @@ class App extends React.Component<AppProps, AppState> {
           won,
           gameState: {
             minimum: gameState.minimum,
-            maximum: guess
+            maximum: guess - 1
           }
         })
       }
@@ -125,6 +125,7 @@ class App extends React.Component<AppProps, AppState> {
     if (showConfetti === undefined) {
       showConfetti = true 
     }
+
     return (
       <div className="App">
         <div>

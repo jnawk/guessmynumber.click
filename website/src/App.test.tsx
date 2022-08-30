@@ -23,6 +23,23 @@ test('game is won when the right element is clicked', () => {
   expect(guessCount).toBe(1)
 });
 
+test('when the right element is clicked, it\'s the only one displayed', () => {
+  render(
+    <App 
+      target={42} 
+      showConfetti={false} 
+    />
+  );
+
+  act(() => {
+    document.getElementById("cell42")?.click()
+  })
+  expect(document.getElementById("cell41")).toBeDefined()
+  expect(document.getElementById("cell41")?.getElementsByTagName("span").length).toBe(0)
+  expect(document.getElementById("cell43")).toBeDefined()
+  expect(document.getElementById("cell43")?.getElementsByTagName("span").length).toBe(0)
+});
+
 test('game is won when the right number is the last option', () => {
   let won = false
   let guessCount
