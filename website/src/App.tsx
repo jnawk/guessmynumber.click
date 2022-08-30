@@ -36,7 +36,7 @@ class App extends React.Component<AppProps, AppState> {
     const {target} = this.props
     this.state = {
       target: target || randomInRange(0, 100),
-      showBestGuess: true,
+      showBestGuess: false,
       guesses: 0,
       won: false,
       gameConfig: {
