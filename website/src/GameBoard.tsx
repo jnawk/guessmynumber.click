@@ -81,13 +81,15 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
                                 blue = 0xff
                             }
                             
+                            click = undefined
                             if(value <= gameState.minimum || value >= gameState.maximum) {
                                 cellContent = <>&nbsp;</>
-                                click = undefined
                                 style = undefined
                             } else {    
                                 cellContent = <span>{value}</span>
-                                click = () => guess(value)
+                                if(!won) {
+                                    click = () => guess(value)
+                                }
                                 style = {
                                     backgroundColor: "rgb(" + red + "," + green + "," + blue + ")",
                                     textShadow: "0px 0px 15px white"
