@@ -41,11 +41,11 @@ class App extends React.Component<AppProps, AppState> {
       guesses: 0,
       won: false,
       gameConfig: gameConfig || {
-        minimum: 0,
+        minimum: 1,
         maximum: 100
       },
       gameState: {
-        minimum: 0,
+        minimum: 1,
         maximum: 100
       }
     }
@@ -80,13 +80,13 @@ class App extends React.Component<AppProps, AppState> {
         guesses,
         won,
         gameState: {
-          minimum: guess - 1,
-          maximum: guess + 1
+          minimum: guess,
+          maximum: guess
         }
       })
     } else {
       if (guess < target) {                
-        if(gameState.maximum == target + 1 && guess == target - 1) {
+        if(gameState.maximum === target && guess === target - 1) {
           guesses = guesses + 1
           won = true
         }
@@ -99,7 +99,7 @@ class App extends React.Component<AppProps, AppState> {
           }
         })
       } else {
-        if(guess == target + 1 && gameState.minimum == target - 1) {
+        if(guess == target + 1 && gameState.minimum == target) {
           guesses = guesses + 1
           won = true
         }

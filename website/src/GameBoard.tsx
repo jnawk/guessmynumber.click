@@ -39,8 +39,8 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
         const {gameConfig, gameState, guess, won, showConfetti} = this.props
         const rowStarts = range(gameConfig.minimum, gameConfig.maximum, 10)
         const rows = rowStarts.map(rowStart => { 
-            const rowEnd = Math.min(gameConfig.maximum, rowStart + 10)
-            return range(rowStart + 1, rowEnd + 1)
+            const rowEnd = Math.min(gameConfig.maximum + 1, rowStart + 10)
+            return range(rowStart, rowEnd)
         }).filter(x => x.length !== 0)
 
         let confetti = undefined
@@ -82,7 +82,7 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
                             }
                             
                             click = undefined
-                            if(value <= gameState.minimum || value > gameState.maximum) {
+                            if(value < gameState.minimum || value > gameState.maximum) {
                                 cellContent = <>&nbsp;</>
                                 style = undefined
                             } else {    

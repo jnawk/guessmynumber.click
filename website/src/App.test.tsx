@@ -40,6 +40,38 @@ test('when the right element is clicked, it\'s the only one displayed', () => {
   expect(document.getElementById("cell43")?.getElementsByTagName("span").length).toBe(0)
 });
 
+test('clicking the minimum when it\'s not the target removes it', () => {
+  render(
+    <App 
+      target={42} 
+    />
+  );
+
+  act(() => {
+    document.getElementById("cell1")?.click()
+  })
+
+  const minimumDisplay = screen.getByText(/Minimum: 2/i);
+  expect(minimumDisplay).toBeInTheDocument();
+
+});
+
+test('clicking the maximum when it\'s not the target removes it', () => {
+  render(
+    <App 
+      target={42} 
+    />
+  );
+
+  act(() => {
+    document.getElementById("cell100")?.click()
+  })
+
+  const minimumDisplay = screen.getByText(/Maximum: 99/i);
+  expect(minimumDisplay).toBeInTheDocument();
+
+});
+
 test('game is won when the right number is the last option', () => {
   let won = false
   let guessCount
