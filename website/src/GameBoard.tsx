@@ -82,7 +82,7 @@ export class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
                             }
                             
                             click = undefined
-                            if(value <= gameState.minimum || value >= gameState.maximum) {
+                            if(value <= gameState.minimum || value > gameState.maximum) {
                                 cellContent = <>&nbsp;</>
                                 style = undefined
                             } else {    

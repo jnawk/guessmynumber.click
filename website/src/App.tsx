@@ -23,6 +23,7 @@ interface AppProps {
   target?: number
   win?: {(guesses: number): void}
   showConfetti?: boolean
+  gameConfig?: GameRange
 }
 
 export function randomInRange(minimum: number, maximum: number): number {
@@ -33,19 +34,19 @@ class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props)
 
-    const {target} = this.props
+    const {target, gameConfig} = this.props
     this.state = {
       target: target || randomInRange(0, 100),
       showBestGuess: false,
       guesses: 0,
       won: false,
-      gameConfig: {
-        minimum: 0,   // TODO this is a bit shit.
-        maximum: 101
+      gameConfig: gameConfig || {
+        minimum: 0,
+        maximum: 100
       },
       gameState: {
         minimum: 0,
-        maximum: 101
+        maximum: 100
       }
     }
   }
