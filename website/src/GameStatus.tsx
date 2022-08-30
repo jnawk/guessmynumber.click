@@ -12,6 +12,15 @@ interface GameStatusState {
     
 }
 
+export function getMidpoint(gameState: GameRange): string | number {
+    const range = gameState.maximum - gameState.minimum
+    let midpoint: string | number = range / 2 + gameState.minimum
+    if (range % 2 === 1) {
+        midpoint = "" + ((range - 1) / 2 + gameState.minimum) + " or " + ((range + 1) / 2 + gameState.minimum)
+    }
+    return midpoint
+}
+
 export class GameStatus extends React.Component<GameStatusProps, GameStatusState> {
     constructor(props: GameStatusProps) {
         super(props)
@@ -19,17 +28,13 @@ export class GameStatus extends React.Component<GameStatusProps, GameStatusState
      
     render(): React.ReactNode {
         const {guesses, gameState, showBestGuess, setShowBestGuess} = this.props
-        const range = gameState.maximum - gameState.minimum
-        const minimum = gameState.minimum + 1
-        const maximum = gameState.maximum - 1
+
+        const minimum = gameState.minimum
+        const maximum = gameState.maximum
         let midPoint: string | number
         
         if(showBestGuess) {
-            midPoint = range / 2 + gameState.minimum
-            if (range % 2 === 1) {
-                midPoint = "" + ((range - 1) / 2 + gameState.minimum) + " or " + ((range + 1) / 2 + gameState.minimum)
-            }
-            midPoint = midPoint + " (click to hide)"
+            midPoint = getMidpoint(gameState) + " (click to hide)"
         } else {
             midPoint = "?? (click to show)"
         }
