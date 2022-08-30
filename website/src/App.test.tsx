@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App, { randomInRange } from './App';
 import { act } from 'react-dom/test-utils';
