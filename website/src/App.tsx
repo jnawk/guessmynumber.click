@@ -23,6 +23,7 @@ interface AppProps {
   target?: number
   win?: {(guesses: number): void}
   showConfetti?: boolean
+  gameConfig?: GameRange
 }
 
 export function randomInRange(minimum: number, maximum: number): number {
@@ -33,19 +34,19 @@ class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props)
 
-    const {target} = this.props
+    const {target, gameConfig} = this.props
     this.state = {
       target: target || randomInRange(0, 100),
-      showBestGuess: true,
+      showBestGuess: false,
       guesses: 0,
       won: false,
-      gameConfig: {
-        minimum: 0,   // TODO this is a bit shit.
-        maximum: 101
+      gameConfig: gameConfig || {
+        minimum: 1,
+        maximum: 100
       },
       gameState: {
-        minimum: 0,
-        maximum: 101
+        minimum: 1,
+        maximum: 100
       }
     }
   }
@@ -79,13 +80,13 @@ class App extends React.Component<AppProps, AppState> {
         guesses,
         won,
         gameState: {
-          minimum: guess - 1,
-          maximum: guess + 1
+          minimum: guess,
+          maximum: guess
         }
       })
     } else {
       if (guess < target) {                
-        if(gameState.maximum == target + 1 && guess == target - 1) {
+        if(gameState.maximum === target && guess === target - 1) {
           guesses = guesses + 1
           won = true
         }
@@ -93,12 +94,12 @@ class App extends React.Component<AppProps, AppState> {
           guesses,
           won,
           gameState: {
-            minimum: guess,
+            minimum: guess + 1,
             maximum: gameState.maximum
           }
         })
       } else {
-        if(guess == target + 1 && gameState.minimum == target - 1) {
+        if(guess == target + 1 && gameState.minimum == target) {
           guesses = guesses + 1
           won = true
         }
@@ -107,7 +108,7 @@ class App extends React.Component<AppProps, AppState> {
           won,
           gameState: {
             minimum: gameState.minimum,
-            maximum: guess
+            maximum: guess - 1
           }
         })
       }
@@ -124,6 +125,7 @@ class App extends React.Component<AppProps, AppState> {
     if (showConfetti === undefined) {
       showConfetti = true 
     }
+
     return (
       <div className="App">
         <div>
